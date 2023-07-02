@@ -1,0 +1,6 @@
+name: TestAsync
+main: vennv\TestAsync\TestAsync
+version: 1.0.0
+api: 5.0.0
+author: "VennVDev"
+description: "This plugin just test my async lib"
