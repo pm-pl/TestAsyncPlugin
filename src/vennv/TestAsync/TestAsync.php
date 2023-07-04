@@ -9,8 +9,6 @@ use pocketmine\scheduler\ClosureTask;
 use vennv\Async;
 use vennv\System;
 
-System::start();
-
 final class TestAsync extends PluginBase implements Listener {
 
     public function onEnable() : void {
