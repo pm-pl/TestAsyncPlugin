@@ -17,7 +17,7 @@ final class TestAsync extends PluginBase implements Listener {
         $this->getServer()->getPluginManager()->registerEvents($this, $this);
         $this->getScheduler()->scheduleRepeatingTask(new ClosureTask(
             function() : void {
-                System::endNonBlocking();
+                System::endMultiJobs();
             }
         ), 20);
     }
@@ -31,7 +31,7 @@ final class TestAsync extends PluginBase implements Listener {
             curl_setopt($curl, CURLOPT_URL, $url);
             curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
 
-            $response = curl_exec($curl);
+            $response = Async::await(fn() => curl_exec($curl));
 
             if (!$response) {
                 $error = curl_error($curl);
