@@ -19,27 +19,18 @@ final class TestAsync extends PluginBase implements Listener {
             }
         ), 20);
     }
-
-    public function onBreak(BlockBreakEvent $event) : void {
+	
+	public function onBreak(BlockBreakEvent $event) : void {
         $player = $event->getPlayer();
         new Async(function() use ($player) {
+			
             $url = "https://www.google.com";
-            $curl = curl_init();
+            
+			$response = Async::await(function() use ($url) {
+                return file_get_contents($url);
+            });
 
-            curl_setopt($curl, CURLOPT_URL, $url);
-            curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
-
-            $response = Async::await(fn() => curl_exec($curl));
-
-            if (!$response) {
-                $error = curl_error($curl);
-                curl_close($curl);
-                $player->sendMessage($error);
-            }
-
-            curl_close($curl);
-
-            $player->sendMessage($response);
+            var_dump($response);
         });
     }
 
