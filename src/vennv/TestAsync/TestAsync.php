@@ -6,7 +6,6 @@ use pocketmine\event\block\BlockBreakEvent;
 use pocketmine\plugin\PluginBase;
 use pocketmine\event\Listener;
 use pocketmine\scheduler\ClosureTask;
-use vennv\Async;
 use vennv\System;
 
 final class TestAsync extends PluginBase implements Listener {
@@ -22,16 +21,16 @@ final class TestAsync extends PluginBase implements Listener {
 	
 	public function onBreak(BlockBreakEvent $event) : void {
         $player = $event->getPlayer();
-        new Async(function() use ($player) {
-			
-            $url = "https://www.google.com";
-            
-			$response = Async::await(function() use ($url) {
-                return file_get_contents($url);
-            });
-
-            var_dump($response);
-        });
+		
+		$url = "https://www.google.com";
+		
+        $fecth = System::fetchJg($url);
+		$fecth->then(function($value) {
+			var_dump($value);
+		});
+		$fecth->catch(function($reason) {
+			var_dump($reason);
+		});
     }
 
 }
